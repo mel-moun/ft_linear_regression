@@ -4,6 +4,16 @@ from calculations import ft_mean, ft_std
 
 
 def calculate_cost(theta0, theta1, mileage, price):
+    """
+        Calculates the cost function (Mean Squared Error)
+        for a linear regression model.
+
+        The cost function evaluates how well the model's
+        predictions match the actual data.
+
+        Lower cost values indicate a better fit of the model to the data.
+    """
+
     m = len(mileage)
     predictions = theta1 * mileage + theta0
     cost = (1 / (2 * m)) * sum((predictions - price) ** 2)
@@ -11,6 +21,17 @@ def calculate_cost(theta0, theta1, mileage, price):
 
 
 def gradient_descent(mileage, price):
+    """"
+        Performs gradient descent to find optimal
+        linear regression parameters.
+
+        Gradient descent is an optimization algorithm
+        used to minimize the cost function.
+        It iteratively updates the parameters (theta0 and theta1)
+        to reduce the cost by calculating the gradients
+        of the cost function with respect to these parameters.
+    """
+
     theta0 = 0
     theta1 = 0
     learning_rate = 0.01
@@ -22,10 +43,10 @@ def gradient_descent(mileage, price):
     for i in range(iterations):
         predictions = theta1 * mileage + theta0
         error = predictions - price
-        gradient_theta0 = (1 / m) * sum(error)
-        gradient_theta1 = (1 / m) * sum(error * mileage)
-        theta0 -= learning_rate * gradient_theta0
-        theta1 -= learning_rate * gradient_theta1
+        tmp_theta0 = (1 / m) * sum(error)
+        tmp_theta1 = (1 / m) * sum(error * mileage)
+        theta0 -= learning_rate * tmp_theta0
+        theta1 -= learning_rate * tmp_theta1
         cost = calculate_cost(theta0, theta1, mileage, price)
         cost_history.append(cost)
 
@@ -35,6 +56,8 @@ def gradient_descent(mileage, price):
 
 
 def plot_single_graph(x, y, xlabel, ylabel, title, color='green', label=None):
+    """Plots a single graph with the given data and labels."""
+
     plt.plot(x, y, color=color, label=label)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
@@ -44,6 +67,8 @@ def plot_single_graph(x, y, xlabel, ylabel, title, color='green', label=None):
 
 
 def plot_graphs(mileage, price, cost_history, theta0, theta1):
+    """Plots the regression results and loss over time."""
+
     plt.figure(figsize=(14, 5))
 
     plt.subplot(1, 2, 1)
@@ -66,6 +91,11 @@ def plot_graphs(mileage, price, cost_history, theta0, theta1):
 
 
 def main():
+    """
+        Loads the data, normalizes it, performs regression,
+        and visualizes results.
+    """
+
     try:
         df = pd.read_csv('data.csv')
         mileage = df['km']

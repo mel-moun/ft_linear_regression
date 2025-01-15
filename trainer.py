@@ -1,4 +1,12 @@
 def read_thetas():
+    """
+        Reads the theta values (model parameters)
+        from the file 'thetas.txt'.
+
+        If the file cannot be read,
+        it returns default values [0, 0].
+    """
+
     try:
         with open("thetas.txt", "r") as data:
             thetas = data.read().strip().split(',')
@@ -9,10 +17,23 @@ def read_thetas():
 
 
 def estimate_price(mileage, theta1, theta2):
+    """
+        Estimates the price based on the mileage and model parameters.
+        The formula used is:
+            price = theta1 + (theta2 * mileage)
+    """
+
     return theta1 + (theta2 * mileage)
 
 
 def main():
+    """
+        Prompts the user to input a mileage,
+        reads model parameters,
+        estimates the price using the regression model,
+        and prints the result.
+    """
+
     try:
         mileage = float(input("Enter a mileage: "))
         thetas = read_thetas()

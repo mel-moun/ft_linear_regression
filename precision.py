@@ -2,14 +2,25 @@ import pandas as pd
 
 
 def calculate_r2(mileage, price, theta0, theta1):
+    """Calculates the R-squared value for a linear regression model.
+        R-squared, or the coefficient of determination,
+        measures how well a regression model explains the variability
+        of the dependent variable.
+        It ranges from 0 to 1, where:
+
+    - 0 indicates that the model explains none of the variability.
+    - 1 indicates that the model explains all the variability."""
+
     predictions = theta1 * mileage + theta0
-    residual_sum_of_squares = sum((price - predictions) ** 2)
-    total_sum_of_squares = sum((price - price.mean()) ** 2)
-    r_squared = 1 - (residual_sum_of_squares / total_sum_of_squares)
+    rss = sum((price - predictions) ** 2)
+    tss = sum((price - price.mean()) ** 2)
+    r_squared = 1 - (rss / tss)
     return r_squared
 
 
 def main():
+    """Reads input data
+    and calculates the R-squared value for the dataset."""
     try:
         with open("thetas.txt", "r") as data:
             thetas = data.read().strip().split(',')
