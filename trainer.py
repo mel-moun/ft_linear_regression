@@ -16,7 +16,7 @@ def main():
     try:
         mileage = float(input("Enter a mileage: "))
         thetas = read_thetas()
-        print("Estimated price:", estimate_price(mileage, thetas[0], thetas[1]))
+        print(estimate_price(mileage, thetas[0], thetas[1]))
     except BaseException as e:
         print(type(e).__name__, ":", e)
 
