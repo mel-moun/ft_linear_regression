@@ -1,121 +1,43 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-from calculations import ft_mean, ft_std
-
-
-def calculate_cost(theta0, theta1, mileage, price):
+def read_thetas():
     """
-        Calculates the cost function (Mean Squared Error)
-        for a linear regression model.
+        Reads the theta values (model parameters)
+        from the file 'thetas.txt'.
 
-        The cost function evaluates how well the model's
-        predictions match the actual data.
-
-        Lower cost values indicate a better fit of the model to the data.
+        If the file cannot be read,
+        it returns default values [0, 0].
     """
 
-    m = len(mileage)
-    predictions = theta1 * mileage + theta0
-    cost = (1 / (2 * m)) * sum((predictions - price) ** 2)
-    return cost
+    try:
+        with open("thetas.txt", "r") as data:
+            thetas = data.read().strip().split(',')
+            thetas = [float(x) for x in thetas]
+        return thetas
+    except BaseException:
+        return [0, 0]
 
 
-def gradient_descent(mileage, price):
-    """"
-        Performs gradient descent to find optimal
-        linear regression parameters.
-
-        Gradient descent is an optimization algorithm
-        used to minimize the cost function.
-        It iteratively updates the parameters (theta0 and theta1)
-        to reduce the cost by calculating the gradients
-        of the cost function with respect to these parameters.
+def estimate_price(mileage, theta1, theta2):
+    """
+        Estimates the price based on the mileage and model parameters.
+        The formula used is:
+            price = theta1 + (theta2 * mileage)
     """
 
-    theta0 = 0
-    theta1 = 0
-    learning_rate = 0.01
-    iterations = 1000
-
-    m = len(mileage)
-    cost_history = []
-
-    for i in range(iterations):
-        predictions = theta1 * mileage + theta0
-        error = predictions - price
-        tmp_theta0 = (1 / m) * sum(error)
-        tmp_theta1 = (1 / m) * sum(error * mileage)
-        theta0 -= learning_rate * tmp_theta0
-        theta1 -= learning_rate * tmp_theta1
-        cost = calculate_cost(theta0, theta1, mileage, price)
-        cost_history.append(cost)
-
-    print(f"theta0: {theta0}\ntheta1: {theta1}")
-
-    return theta0, theta1, cost_history
-
-
-def plot_single_graph(x, y, xlabel, ylabel, title, color='green', label=None):
-    """Plots a single graph with the given data and labels."""
-
-    plt.plot(x, y, color=color, label=label)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
-    plt.title(title)
-    if label:
-        plt.legend()
-
-
-def plot_graphs(mileage, price, cost_history, theta0, theta1):
-    """Plots the regression results and loss over time."""
-
-    plt.figure(figsize=(14, 5))
-
-    plt.subplot(1, 2, 1)
-    plt.scatter(mileage, price, label='Data points', color='blue')
-    plot_single_graph(mileage,
-                      theta1 * mileage + theta0,
-                      'Mileage', 'Price', 'Data and hypothesise',
-                      'green', 'Linear regression')
-
-    plt.subplot(1, 2, 2)
-    plot_single_graph(range(1000),
-                      cost_history,
-                      'Iterations',
-                      'Loss',
-                      'Loss over time',
-                      'green')
-
-    plt.tight_layout()
-    plt.show()
+    return theta1 + (theta2 * mileage)
 
 
 def main():
     """
-        Loads the data, normalizes it, performs regression,
-        and visualizes results.
+        Prompts the user to input a mileage,
+        reads model parameters,
+        estimates the price using the regression model,
+        and prints the result.
     """
 
     try:
-        df = pd.read_csv('data.csv')
-        mileage = df['km']
-        price = df['price']
-
-        mean = ft_mean(mileage)
-        std_var = ft_std(mileage)
-        normalize_mileage = (mileage - mean) / std_var
-
-        theta0, theta1, cost_history = gradient_descent(normalize_mileage,
-                                                        price)
-
-        theta0 = theta0 - theta1 * (mean / std_var)
-        theta1 = theta1 / std_var
-
-        with open('thetas.txt', 'w') as file:
-            file.write(f"{theta0},{theta1}")
-
-        plot_graphs(mileage, price, cost_history, theta0, theta1)
-
+        mileage = float(input("Enter a mileage: "))
+        thetas = read_thetas()
+        print(estimate_price(mileage, thetas[0], thetas[1]))
     except BaseException as e:
         print(type(e).__name__, ":", e)
 
