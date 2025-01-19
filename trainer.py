@@ -40,7 +40,7 @@ def gradient_descent(mileage, price):
     m = len(mileage)
     cost_history = []
 
-    for i in range(iterations):
+    for _ in range(iterations):
         predictions = estimate_price(mileage, theta0, theta1)
         error = predictions - price
 
