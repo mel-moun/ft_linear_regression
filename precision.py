@@ -1,4 +1,6 @@
 import pandas as pd
+from predictor import estimate_price
+from calculations import ft_mean
 
 
 def calculate_r2(mileage, price, theta0, theta1):
@@ -11,16 +13,16 @@ def calculate_r2(mileage, price, theta0, theta1):
     - 0 indicates that the model explains none of the variability.
     - 1 indicates that the model explains all the variability."""
 
-    predictions = theta1 * mileage + theta0
+    predictions = estimate_price(mileage, theta0, theta1)
     rss = sum((price - predictions) ** 2)
-    tss = sum((price - price.mean()) ** 2)
-    r_squared = 1 - (rss / tss)
-    return r_squared
+    tss = sum((price - ft_mean(price)) ** 2)
+    return 1 - (rss / tss)
 
 
 def main():
     """Reads input data
     and calculates the R-squared value for the dataset."""
+
     try:
         with open("thetas.txt", "r") as data:
             thetas = data.read().strip().split(',')
