@@ -1,9 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from calculations import ft_mean, ft_std
+from predictor import estimate_price
 
 
-def calculate_cost(theta0, theta1, mileage, price):
+def calculate_cost(error):
     """
         Calculates the cost function (Mean Squared Error)
         for a linear regression model.
@@ -14,9 +15,8 @@ def calculate_cost(theta0, theta1, mileage, price):
         Lower cost values indicate a better fit of the model to the data.
     """
 
-    m = len(mileage)
-    predictions = theta1 * mileage + theta0
-    cost = (1 / (2 * m)) * sum((predictions - price) ** 2)
+    m = len(error)
+    cost = (1 / (2 * m)) * sum(error ** 2)
     return cost
 
 
@@ -41,13 +41,16 @@ def gradient_descent(mileage, price):
     cost_history = []
 
     for i in range(iterations):
-        predictions = theta1 * mileage + theta0
+        predictions = estimate_price(mileage, theta0, theta1)
         error = predictions - price
+
         tmp_theta0 = (1 / m) * sum(error)
         tmp_theta1 = (1 / m) * sum(error * mileage)
+
         theta0 -= learning_rate * tmp_theta0
         theta1 -= learning_rate * tmp_theta1
-        cost = calculate_cost(theta0, theta1, mileage, price)
+
+        cost = calculate_cost(error)
         cost_history.append(cost)
 
     print(f"theta0: {theta0}\ntheta1: {theta1}")
