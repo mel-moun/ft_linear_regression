@@ -85,8 +85,9 @@ $$
 \text{TSS} = \sum_{i=1}^n (y_i - \bar{y})^2
 $$
 
-where:
-ȳ : is the mean (average) of all the observed values.
+Where:
+
+- ȳ : is the mean (average) of all the observed values.
 
 ---
 
