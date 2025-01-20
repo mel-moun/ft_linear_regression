@@ -59,7 +59,9 @@ def gradient_descent(mileage, price):
 
 
 def plot_single_graph(x, y, xlabel, ylabel, title, color='green', label=None):
-    """Plots a single graph with the given data and labels."""
+    """
+        Plots a single graph with the given data and labels.
+    """
 
     plt.plot(x, y, color=color, label=label)
     plt.xlabel(xlabel)
@@ -70,7 +72,9 @@ def plot_single_graph(x, y, xlabel, ylabel, title, color='green', label=None):
 
 
 def plot_graphs(mileage, price, cost_history, theta0, theta1):
-    """Plots the regression results and loss over time."""
+    """
+        Plots the regression results and loss over time.
+    """
 
     plt.figure(figsize=(14, 5))
 

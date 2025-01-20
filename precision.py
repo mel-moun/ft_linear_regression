@@ -4,14 +4,16 @@ from calculations import ft_mean
 
 
 def calculate_r2(mileage, price, theta0, theta1):
-    """Calculates the R-squared value for a linear regression model.
+    """
+        Calculates the R-squared value for a linear regression model.
         R-squared, or the coefficient of determination,
         measures how well a regression model explains the variability
         of the dependent variable.
         It ranges from 0 to 1, where:
 
-    - 0 indicates that the model explains none of the variability.
-    - 1 indicates that the model explains all the variability."""
+        - 0 indicates that the model explains none of the variability.
+        - 1 indicates that the model explains all the variability.
+    """
 
     predictions = estimate_price(mileage, theta0, theta1)
     rss = sum((price - predictions) ** 2)
@@ -20,8 +22,10 @@ def calculate_r2(mileage, price, theta0, theta1):
 
 
 def main():
-    """Reads input data
-    and calculates the R-squared value for the dataset."""
+    """
+        Reads input data
+        and calculates the R-squared value for the dataset.
+    """
 
     try:
         with open("thetas.txt", "r") as data:
