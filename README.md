@@ -32,6 +32,10 @@ Where:
 
 The goal is to adjust the values of θ0 and θ1 so the model's predictions are as close as possible to the actual car prices.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c18bfc84-58b7-403e-99ef-67d277e453fb" alt="Linear Regression Model" />
+</p>
+
 ---
 
 ### 2. **Gradient Descent: How the Model Learns** 🏃‍♂️
@@ -41,6 +45,12 @@ The goal is to adjust the values of θ0 and θ1 so the model's predictions are a
 - It starts with random values for θ0 and θ1.
 - Then, it gradually adjusts them by calculating the error (the difference between the predicted and actual prices).
 - The model repeats this process until it finds the values that make the error as small as possible.
+
+This graph shows how the cost changes over 1000 iterations of gradient descent:
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d2538944-8a07-4f23-9df6-c3996218a8de" alt="Gradient Descent Loss Curve" />
+</p>
 
 ---
 
